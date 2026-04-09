@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Tapioca</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #fffaf0, #f5f5dc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  background: #fffdf7;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  text-align: center;
+  position: relative;
+}
+
+.tela {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+.ativa {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+button {
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f3e5ab;
+  color: #5d4037;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid #e0c97f;
+  transition: 0.25s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.start {
+  background: #d7ccc8;
+}
+
+.voltar {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: auto;
+}
+
+.barra {
+  height: 8px;
+  background: #eee;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.progresso {
+  height: 100%;
+  background: #bcaaa4;
+  width: 0%;
+  border-radius: 10px;
+}
+
+.resultado {
+  font-size: 22px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU -->
+<div class="container tela ativa" id="menu">
+  <h1>🥥 Tapioca</h1>
+  <p>Explore a ciência por trás da preparação da tapioca!</p>
+
+  <button class="start" onclick="iniciarJogo()">▶ Start</button>
+  <button onclick="abrirCreditos()">📜 Créditos</button>
+</div>
+
+<!-- CRÉDITOS -->
+<div class="container tela" id="creditos">
+  <button class="voltar" onclick="voltarMenu()">⬅ Voltar</button>
+  <h1>Créditos</h1>
+  <p>Jogo educativo sobre a tapioca.</p>
+</div>
+
+<!-- JOGO -->
+<div class="container tela" id="jogo">
+
+<div class="barra">
+  <div class="progresso" id="progresso"></div>
+</div>
+
+<div class="tela ativa" id="tela1">
+<h1>Bem-vindo!</h1>
+<button onclick="proximaTela()">Começar</button>
+</div>
+
+<div class="tela" id="tela2">
+<h2>Missão</h2>
+<p>Descubra como o calor transforma a goma de tapioca em um alimento sólido.</p>
+<button onclick="proximaTela()">Continuar</button>
+</div>
+
+<div class="tela" id="tela3">
+<h2>A goma de tapioca é inicialmente:</h2>
+<button onclick="responder(true,'A goma de tapioca é inicialmente:','Granulada e seca','Granulada e seca')">Granulada e seca</button>
+<button onclick="responder(false,'A goma de tapioca é inicialmente:','Líquida','Granulada e seca')">Líquida</button>
+<button onclick="responder(false,'A goma de tapioca é inicialmente:','Gasosa','Granulada e seca')">Gasosa</button>
+</div>
+
+<div class="tela" id="tela4">
+<h2>O calor na frigideira:</h2>
+<button onclick="responder(true,'O calor na frigideira:','Aquece a goma','Aquece a goma')">Aquece a goma</button>
+<button onclick="responder(false,'O calor na frigideira:','Esfria a goma','Aquece a goma')">Esfria a goma</button>
+<button onclick="responder(false,'O calor na frigideira:','Não altera','Aquece a goma')">Não altera</button>
+</div>
+
+<div class="tela" id="tela5">
+<h2>A goma se transforma porque:</h2>
+<button onclick="responder(true,'A goma se transforma porque:','Recebe calor','Recebe calor')">Recebe calor</button>
+<button onclick="responder(false,'A goma se transforma porque:','Perde luz','Recebe calor')">Perde luz</button>
+<button onclick="responder(false,'A goma se transforma porque:','Ganha vento','Recebe calor')">Ganha vento</button>
+</div>
+
+<div class="tela" id="tela6">
+<h2>O calor se espalha pela frigideira por:</h2>
+<button onclick="responder(true,'O calor se espalha por:','Condução','Condução')">Condução</button>
+<button onclick="responder(false,'O calor se espalha por:','Som','Condução')">Som</button>
+<button onclick="responder(false,'O calor se espalha por:','Luz','Condução')">Luz</button>
+</div>
+
+<div class="tela" id="tela7">
+<h2>A tapioca fica firme porque:</h2>
+<button onclick="responder(true,'A tapioca fica firme porque:','O calor altera sua estrutura','O calor altera sua estrutura')">O calor altera sua estrutura</button>
+<button onclick="responder(false,'A tapioca fica firme porque:','Esfria apenas','O calor altera sua estrutura')">Esfria apenas</button>
+<button onclick="responder(false,'A tapioca fica firme porque:','Seca no ar','O calor altera sua estrutura')">Seca no ar</button>
+</div>
+
+<div class="tela" id="tela8">
+<h2>Virar a tapioca ajuda a:</h2>
+<button onclick="responder(true,'Virar a tapioca ajuda a:','Distribuir calor','Distribuir calor')">Distribuir calor</button>
+<button onclick="responder(false,'Virar a tapioca ajuda a:','Esfriar','Distribuir calor')">Esfriar</button>
+<button onclick="responder(false,'Virar a tapioca ajuda a:','Parar o cozimento','Distribuir calor')">Parar o cozimento</button>
+</div>
+
+<div class="tela" id="tela9">
+<h2>A tapioca é típica de:</h2>
+<button onclick="responder(true,'A tapioca é típica de:','Norte e Nordeste','Norte e Nordeste')">Norte e Nordeste</button>
+<button onclick="responder(false,'A tapioca é típica de:','Europa','Norte e Nordeste')">Europa</button>
+<button onclick="responder(false,'A tapioca é típica de:','África','Norte e Nordeste')">África</button>
+</div>
+
+<div class="tela" id="tela10">
+<h2>Complete:</h2>
+<p>O cozimento acontece devido ao <strong>__________</strong>.</p>
+<button onclick="responder(true,'Cozimento:','Calor','Calor')">Calor</button>
+<button onclick="responder(false,'Cozimento:','Frio','Calor')">Frio</button>
+<button onclick="responder(false,'Cozimento:','Vento','Calor')">Vento</button>
+</div>
+
+<div class="tela" id="tela11">
+<h2>Complete:</h2>
+<p>A tapioca muda de estado por causa do <strong>__________</strong>.</p>
+<button onclick="responder(true,'Mudança:','Calor','Calor')">Calor</button>
+<button onclick="responder(false,'Mudança:','Som','Calor')">Som</button>
+<button onclick="responder(false,'Mudança:','Luz','Calor')">Luz</button>
+</div>
+
+<div class="tela" id="tela12">
+<h1>🎉 Resultado</h1>
+<p class="resultado" id="resultado"></p>
+
+<button onclick="gerarRelatorio()">📄 Gerar relatório</button>
+<button onclick="reiniciarJogo()">🏠 Voltar</button>
+</div>
+
+</div>
+
+<script>
+let telaAtual = 1;
+let pontuacao = 0;
+let totalTelas = 12;
+let respostasUsuario = [];
+
+function iniciarJogo(){
+  document.getElementById("menu").classList.remove("ativa");
+  document.getElementById("jogo").classList.add("ativa");
+}
+
+function abrirCreditos(){
+  document.getElementById("menu").classList.remove("ativa");
+  document.getElementById("creditos").classList.add("ativa");
+}
+
+function voltarMenu(){
+  document.getElementById("creditos").classList.remove("ativa");
+  document.getElementById("menu").classList.add("ativa");
+}
+
+function atualizarBarra(){
+  let progresso = ((telaAtual-1)/(totalTelas-1))*100;
+  document.getElementById("progresso").style.width = progresso+"%";
+}
+
+function proximaTela(){
+  document.getElementById("tela"+telaAtual).classList.remove("ativa");
+  telaAtual++;
+  document.getElementById("tela"+telaAtual).classList.add("ativa");
+
+  atualizarBarra();
+
+  if(telaAtual===12){
+    document.getElementById("resultado").innerText="Você fez "+pontuacao+" pontos!";
+  }
+}
+
+function responder(correta,pergunta,resposta,corretaTexto){
+  respostasUsuario.push({pergunta,resposta,correta:corretaTexto,acertou:correta});
+  if(correta) pontuacao++;
+  proximaTela();
+}
+
+function reiniciarJogo(){
+  location.reload();
+}
+
+function gerarRelatorio(){
+  let nova=window.open("","_blank");
+
+  let html=`
+  <html><head><title>Relatório</title>
+  <style>
+  body{font-family:Arial;padding:20px;}
+  .certo{color:green;}
+  .errado{color:red;}
+  </style>
+  </head><body>
+
+  <h1>Relatório - Tapioca</h1>
+  <p>Pontuação: ${pontuacao}</p><hr>
+  `;
+
+  respostasUsuario.forEach((r,i)=>{
+    html+=`
+    <p><b>${i+1}. ${r.pergunta}</b></p>
+    <p>Sua resposta: ${r.resposta}</p>
+    <p>Correta: ${r.correta}</p>
+    <p class="${r.acertou?'certo':'errado'}">
+    ${r.acertou?'✔ Acertou':'✘ Errou'}
+    </p><hr>`;
+  });
+
+  html+=`<button onclick="window.print()">📄 Salvar como PDF</button></body></html>`;
+
+  nova.document.write(html);
+}
+
+atualizarBarra();
+</script>
+
+</body>
+  </html>
